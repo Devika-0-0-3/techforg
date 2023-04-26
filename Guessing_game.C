@@ -1,20 +1,23 @@
 #include<stdio.h>
 #include<stdlib.h>
-
-void main()
+#include<time.h>
+int main()
 {
- int i,n,r,count=0;
- for(i=1;i<=100;i++)
- {
-    r=rand();
- }
- for(i=0;i<10;i++)
- {
-    printf("guess the number: ");
+ int i,n,r,count=0,highscore=10,l=1,u=100;
+
+ 
+ srand(time(NULL));
+ 
+ r=(rand() % (u-l+1)) + l;
+ printf("%d",r);
+for(i=0;i<10;i++)
+{
+    printf("\nguess the number: ");
     scanf("%d",&n);
     if(n==r)
     { 
         printf("guessed correct");
+        break;
     }
     else
     {
@@ -28,14 +31,27 @@ void main()
         }
     }
     count++;
+    highscore--;
 
 }
 if(count==10)
  {
     printf("Game over\n");
-    exit(0);
+    
  }
- printf("the no of tries is %d",count);
+ printf("\nthe no of tries is %d",count);
  
+
+FILE *guess=fopen("guessgame.txt","w");
+if(guess==NULL)
+{
+  printf("Error OPening FILE");
+  return 1;
+}
+
+fprintf(guess,"%d",highscore);
+
+fclose(guess);
+return 0;
 }
 
